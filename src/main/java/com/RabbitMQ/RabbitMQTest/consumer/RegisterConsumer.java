@@ -1,18 +1,18 @@
 package com.RabbitMQ.RabbitMQTest.consumer;
 
+import com.RabbitMQ.RabbitMQTest.dto.RegisterRequest;
+import java.util.concurrent.CountDownLatch;
+import lombok.Getter;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
-public class RegisterConsumer {
+@Getter
+@Service
+public class RegisterConsumer{
 
     @RabbitListener(queues = "register.queue")
-    public void receive(String message) {
-        String[] parts = message.split(":");
-        String courseId = parts[0];
-        String studentId = parts[1];
-
-        System.out.println("수강신청 요청 수신: " + courseId + ", 학생: " + studentId);
-        // 단순 출력
+    public void consume(RegisterRequest request) {
+        // 이 메서드 안이 Consumer 역할 (메시지를 소비 = 처리)
+        System.out.println("receive: " + request.getCourseId() + "stu: " + request.getStudentId());
     }
 }
